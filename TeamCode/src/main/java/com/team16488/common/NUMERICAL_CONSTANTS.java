@@ -12,6 +12,6 @@ public class NUMERICAL_CONSTANTS {
     public static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
     public static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     public static final double     TICKS_PER_INCH          = (TICKS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION)/
-                                                      (WHEEL_DIAMETER_INCHES * Math.PI);
+                                                             (WHEEL_DIAMETER_INCHES * Math.PI);
 
 }

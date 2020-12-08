@@ -10,46 +10,59 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * our robots init method, see robot.java for more
  * when writing each individual component we initialize this method IN THE CONSTRUCTOR OF THE COMPONENT that allows us
  * to store all of our hardware variables place and just call them from each class
- *
- * Note: when making a component we only have to call from here to get the hardware objects afterwards we can use local objecs or these objects
+ * <p>
+ * Note: when making a component we only have to call from here to get the hardware objects afterwards we can use local objects or these objects
  */
 public class RobotMap {
-    // hardware map object(local, hence why its private)
+    // Hardware map object(local, hence why its private)
     HardwareMap map;
 
-    // Robot objects(project wide, hence why its public)
-    // drivetrain motors
+    //---------------------------------------------------------------
+    // Declare Hardware
+    //---------------------------------------------------------------
+
+    // Drive train motors
     public DcMotor FrontRightMotor  = null;
     public DcMotor FrontLeftMotor   = null;
     public DcMotor RearRightMotor   = null;
     public DcMotor RearLeftMotor    = null;
 
-    public RobotMap(){
-        // constructor
-    }
+    // constructor
+    // this is here so that every time we need to use the robot in an OpMode or component
+    // we can create a new instance that doesn't conflict
+    public RobotMap() {}
 
-    public void mapHardware(HardwareMap hardwareMap){
+    public void mapHardware(HardwareMap hardwareMap) {
         // here we map all of our hardware components
-        map = hardwareMap;
+        // Initialize HardwareMap object
+        map                 = hardwareMap;
 
         //---------------------------------------------------------------
-        // Drive Train
+        // Map Hardware
         //---------------------------------------------------------------
-        //Drive train
-        FrontLeftMotor  = map.get(DcMotor.class, "FL");
-        FrontRightMotor = map.get(DcMotor.class, "FR");
-        RearRightMotor  = map.get(DcMotor.class, "BR");
-        RearLeftMotor   = map.get(DcMotor.class, "BL");
 
-        //set the left side direction to reverse
+        // Drive train
+        FrontLeftMotor      = map.get(DcMotor.class, "FL");
+        FrontRightMotor     = map.get(DcMotor.class, "FR");
+        RearRightMotor      = map.get(DcMotor.class, "BR");
+        RearLeftMotor       = map.get(DcMotor.class, "BL");
+
+        //---------------------------------------------------------------
+        // Initialize hardware(if Required)
+        //---------------------------------------------------------------
+
+        // Drive train
+        // set the left side direction to reverse
         FrontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         RearLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        //set all powers to zero
+        // set all powers to zero
         FrontRightMotor.setPower(0);
         FrontLeftMotor.setPower(0);
         RearRightMotor.setPower(0);
         RearLeftMotor.setPower(0);
+
     }
+
 
 }

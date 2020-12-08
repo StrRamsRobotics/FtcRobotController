@@ -29,6 +29,13 @@ public class auto extends LinearOpMode {
         drive.encoderDriveInit();
 
         // custom auto code here
+        drive.encoderDrive(0.7, 10, "forward", null); // drives forward 10 inches
+        drive.encoderDrive(0.5,10, null, "left"); // turns left 10 inches idealy
+        drive.encoderDrive(0.7, 10, "backward", null); // moves backward 10 inches
+        drive.encoderDrive(0.7, 10, null, "right"); // moves right 10 inches
+        drive.encoderDrive(0.7, 10, "left", null); // drives left(strafes) 10 inches
+        drive.encoderDrive(0.7, 10, "right", null); // drives right(strafes) 10 inches
+
         // Note you can add stuff to components and then just call that stuff here if you want
         //ex:
             //drive.operatorMecanumDrive(0,0,1);
