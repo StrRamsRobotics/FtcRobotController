@@ -29,7 +29,6 @@ public class DriveStraight {
         this.robot.RearLeftMotor.setPower(leftPower);
     }
 
-
     // Arcade Mode uses yAxis(traditionally left stick) to go forward, and xAxis
     // (traditionally right stick) to turn.
     public void driveArcade(double xAxis, double yAxis){
