@@ -1,6 +1,7 @@
 package com.team16488;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.team16488.common.RobotMap;
 import com.team16488.compoonents.DriveStraight;
 import com.team16488.compoonents.MecanumDrive;
@@ -9,6 +10,7 @@ import com.team16488.compoonents.MecanumDrive;
  * This is the main OpMode for the driver operated portion of the event
  * HERE WE RUN THE METHODS ASSOCIATED WITH THE COMPONENTS OF THE ROBOT
  */
+@TeleOp(name = "Main", group = "Itrative OpMode")
 public class Robot extends OpMode {
     // Create our virtual Robot(using the robotMap class)
     public RobotMap       robot = new RobotMap();
@@ -59,7 +61,7 @@ public class Robot extends OpMode {
         // Tank Command
         driveStraight.driveTank(gamepad1.left_stick_y, gamepad1.right_stick_y);
         // Arcade Drive Command
-        driveStraight.driveArcade(gamepad1.right_stick_x, gamepad1.left_stick_y);
+        //driveStraight.driveArcade(gamepad1.right_stick_x, gamepad1.left_stick_y);
 
     }
 
