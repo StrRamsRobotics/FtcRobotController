@@ -21,8 +21,9 @@ public class TensorflowClassroom extends LinearOpMode {
     private static final String LABEL_SECOND_ELEMENT = "Single";
     public static final String[] LABELS = {
             "Duck",
-            "Poppy",
-            "Custom"
+            "Cube"
+            //"Poppy",
+            //"Custom"
     };
 
 
@@ -37,13 +38,14 @@ public class TensorflowClassroom extends LinearOpMode {
         if(tfod != null)
         {
             tfod.activate();
-            tfod.setZoom(2.0, 16.0/9.0);
+            tfod.setZoom(1.0, 16.0/9.0);
         }else{
             tfod.deactivate();
             return;
         }
 
         // vision results
+        waitForStart();
         while (opModeIsActive()) {
             if (tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
@@ -61,6 +63,14 @@ public class TensorflowClassroom extends LinearOpMode {
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
                         i++;
+
+                        if(recognition.getLabel().equals("Duck")) {
+                            if ((recognition.getRight() - recognition.getLeft())/2 + recognition.getLeft() < 0.0){
+                                telemetry.addData("Position: ", "LEFT");
+                            }else{
+                                telemetry.addData("Position: ", "RIGHT");
+                            }
+                        }
                     }
                     telemetry.update();
                 }

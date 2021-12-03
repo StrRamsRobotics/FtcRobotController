@@ -1,0 +1,3 @@
+0 Duck
+1 Cube
+2 Ball
