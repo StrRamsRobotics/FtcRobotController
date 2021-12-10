@@ -49,7 +49,7 @@ public class Driving extends System {
 
             //power
             flm.setPower(y2);
-            // frm.setPower(x2);
+            frm.setPower(x2);
 
             blm.setPower(y2);
             brm.setPower(x2);

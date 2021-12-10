@@ -33,20 +33,23 @@ public class DuckSighitng extends LinearOpMode {
 
     public void runOpMode()
     {
+        waitForStart();
+
         initVuforia();
         initTfod();
 
         if(tfod != null)
         {
             tfod.activate();
-            tfod.setZoom(1.0, 16.0/9.0);
+            tfod.setZoom(1.0, 8.0/4.5);
         }else{
+            telemetry.addData("error", "tfod not activated");
+            telemetry.update();
             tfod.deactivate();
             return;
         }
 
         // vision results
-        waitForStart();
         while (opModeIsActive()) {
             if (tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
