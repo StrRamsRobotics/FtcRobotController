@@ -10,16 +10,17 @@ public class Driving extends System {
     private DcMotor flm, frm, blm, brm;
     private double x1, x2, y1, y2;
     private boolean strafe = false;
+    private boolean slomo = false, pressed = false;
 
     public Driving(HardwareMap hw, Controller controller){
         super(hw, controller);
     }
 
     public void init(){
-        flm = hw.dcMotor.get("frontLeftDrive");
-        frm = hw.dcMotor.get("frontRightDrive");
-        blm = hw.dcMotor.get("backLeftDrive");
-        brm = hw.dcMotor.get("backRightDrive");
+        flm = hw.dcMotor.get("flm");
+        frm = hw.dcMotor.get("frm");
+        blm = hw.dcMotor.get("blm");
+        brm = hw.dcMotor.get("brm");
 
         flm.setDirection(DcMotorSimple.Direction.FORWARD);
         frm.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -30,6 +31,10 @@ public class Driving extends System {
     @Override
     public void update() {
         // check for strafing
+        if (controller.gamepad1.y && !pressed) {
+            pressed = true;
+            slomo = !slomo;
+        } else pressed = false;
         if(controller.gamepad1.dpad_left) {
             x1 = -1;
             strafe = false;
@@ -47,6 +52,11 @@ public class Driving extends System {
             y2 = x1*sin45 + y1*cos45;
             x2 = x1*cos45 - y1*sin45;
 
+            if (slomo){
+                y2 *= 0.2;
+                x2 *= 0.2;
+            }
+
             //power
             flm.setPower(y2);
             frm.setPower(x2);
@@ -62,19 +72,22 @@ public class Driving extends System {
             y2 = x1*sin45 + y1*cos45;
             x2 = x1*cos45 - y1*sin45;
 
+            if (slomo){
+                y2 *= 0.2;
+                x2 *= 0.2;
+            }
+
 
             //power
-            flm.setPower(y2);
-            frm.setPower(x2);
+            flm.setPower(x2);
+            frm.setPower(-x2);
 
-            blm.setPower(x2);
-            brm.setPower(y2);
+            blm.setPower(-x2);
+            brm.setPower(x2);
 
             controller.telemetry.addData("x2", "%.2f", x2);
             controller.telemetry.addData("y2", "%.2f", y2);
         }
 
-        if(controller.gamepad1.a)
-            frm.setPower(-0.4);
     }
 }

@@ -23,8 +23,9 @@ public class DuckSpinner extends System {
     public void update() {
         // if a is pressed on gp 1, spin
         if (controller.gamepad1.a){
-            spinner.setPower(0.5);
+            spinner.setPower(0.6);
             controller.telemetry.addData("Spinning", "YES!");
+            if (controller.gamepad1.right_trigger > 0) spinner.setPower(2.0);
         }else{
             spinner.setPower(0);
             controller.telemetry.addData("Spinning", "NO!");

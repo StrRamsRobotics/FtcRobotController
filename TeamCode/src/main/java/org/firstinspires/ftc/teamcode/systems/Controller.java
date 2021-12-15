@@ -19,8 +19,8 @@ public class Controller extends LinearOpMode {
         // add the systems
         systems.add(new Driving(hardwareMap, this));
         systems.add(new DuckSpinner(hardwareMap, this));
-        // systems.add(new Arm(hardwareMap, this));
-        // systems.add(new Input(hardwareMap, this));
+        systems.add(new Arm(hardwareMap, this));
+        systems.add(new Intake(hardwareMap, this));
 
         for (System s : systems)
             s.init();

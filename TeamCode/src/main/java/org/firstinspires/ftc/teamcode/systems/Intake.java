@@ -16,14 +16,14 @@ public class Intake extends System {
     public void init() {
         // get the motor
         inputSpinner = hw.dcMotor.get("inputSpinner");
-        inputSpinner.setDirection(DcMotorSimple.Direction.FORWARD);
+        inputSpinner.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
     public void update() {
 
         if (controller.gamepad2.a){
-            inputSpinner.setPower(1);
+            inputSpinner.setPower(3);
         }else{
             inputSpinner.setPower(0);
         }

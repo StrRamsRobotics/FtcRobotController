@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.systems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Arm extends System{
 
@@ -10,6 +11,7 @@ public class Arm extends System{
     private int increment = 1440;
 
     private DcMotor armMotor;
+    private Servo dump;
     private int pos, initPos;
     private int cnt;
 
@@ -21,6 +23,8 @@ public class Arm extends System{
     public void init() {
         // get motor
         armMotor = hw.dcMotor.get("outputController");
+        dump = hw.servo.get("dump");
+        dump.setPosition(0);
         armMotor.setTargetPosition(0);
         casting = inc * increase;
         increment = (int) inc;
@@ -38,6 +42,10 @@ public class Arm extends System{
             setPosOne();
         }
         controller.telemetry.addData("Arm Position: ", pos);
+
+        if(controller.gamepad2.y)
+            dump.setPosition(1);
+        else dump.setPosition(0);
     }
 
     private void setPosOne(){
