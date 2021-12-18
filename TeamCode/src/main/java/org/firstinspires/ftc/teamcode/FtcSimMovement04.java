@@ -4,15 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-/***
- * Essentially the same as challenge 1, except in reverse. I included a constant for
- * the forward speed and sleep time to keep things organized and easy to find/tweak.
- */
-public class FTCSimIntro02 extends LinearOpMode {
-    double FORWARD_SPEED = 0.5;
-    int SLEEP_TIME = 3000;
-
+public class FtcSimMovement04 extends LinearOpMode {
     DcMotor motorLeft;
     DcMotor motorRight;
     Servo servo1;
@@ -30,15 +24,41 @@ public class FTCSimIntro02 extends LinearOpMode {
         DistanceSensor distance1 = hardwareMap.get(DistanceSensor.class, "distance1");
 
         waitForStart();
+        pointTurnRight(0.5);
+        sleep(500);
+        swingLeft(0.5, 0.5);
+        sleep(3700);
+        stopMotion();
 
-        motorLeft.setPower(-FORWARD_SPEED);
-        motorRight.setPower(-FORWARD_SPEED);
+        while (opModeIsActive()) { }
+    }
 
-        sleep(SLEEP_TIME);
+    void reverse(double power) {
+        forward(-power);
+    }
 
-        motorLeft.setPower(0);
-        motorRight.setPower(0);
+    void forward(double power) {
+        move(power, power);
+    }
 
-        while (opModeIsActive()) {}
+    void pointTurnRight(double power) {
+        move(power, -power);
+    }
+
+    void swingLeft(double power, double ratio) {
+        move(power * ratio, power);
+    }
+
+    void swingRight(double power, double ratio) {
+        move(power, power * ratio);
+    }
+
+    void stopMotion() {
+        move(0, 0);
+    }
+
+    void move(double powerLeft, double powerRight) {
+        motorLeft.setPower(powerLeft);
+        motorRight.setPower(powerRight);
     }
 }

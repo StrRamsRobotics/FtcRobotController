@@ -6,20 +6,13 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /***
- * This OpMode uses the sleep() command. Not the greatest for anything beyond beginner
- * code, but it serves as a good intro to programming a robot.
- *
- * More advanced implementation:
- * It would be best to make use of the ElapsedTime object to run the while loop and
- * break out of the while loop when your time has been reached. I was unable to import
- * this class in the FTC Sim but it could be used IRL.
- *
- * In the FTC sim, you can also make use of the
- * DistanceSensor where distance1.getDistance(DistanceUnit.CM) will give you the distance
- * to the flag (from the Robot Controller) in centimeters. If the distance < 1 cm, then
- * break out of the while loop.
+ * Essentially the same as challenge 1, except in reverse. I included a constant for
+ * the forward speed and sleep time to keep things organized and easy to find/tweak.
  */
-public class FTCSimIntro01 extends LinearOpMode {
+public class FtcSimIntro02 extends LinearOpMode {
+    double FORWARD_SPEED = 0.5;
+    int SLEEP_TIME = 3000;
+
     DcMotor motorLeft;
     DcMotor motorRight;
     Servo servo1;
@@ -34,20 +27,18 @@ public class FTCSimIntro01 extends LinearOpMode {
 
         servo1 = hardwareMap.get(Servo.class, "servo1");
         color1 = hardwareMap.get(DistanceSensor.class, "color1");
-
         DistanceSensor distance1 = hardwareMap.get(DistanceSensor.class, "distance1");
 
         waitForStart();
 
-        motorLeft.setPower(0.3);
-        motorRight.setPower(0.3);
+        motorLeft.setPower(-FORWARD_SPEED);
+        motorRight.setPower(-FORWARD_SPEED);
 
-        sleep(3000);
+        sleep(SLEEP_TIME);
 
         motorLeft.setPower(0);
         motorRight.setPower(0);
 
-        while (opModeIsActive()) {
-        }
+        while (opModeIsActive()) {}
     }
 }
