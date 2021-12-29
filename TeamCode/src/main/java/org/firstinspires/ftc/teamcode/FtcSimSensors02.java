@@ -58,6 +58,10 @@ public class FtcSimSensors02 extends LinearOpMode {
         telemetry.addData("Hue", hue);
 
         if (hue != 0) {
+            // slight correction
+            forward(0.1);
+            sleep(800);
+
             stopMotion();
             // determine color
             if (hue >= 340 && hue <= 360 || hue >= 0 && hue <= 20) {
@@ -67,10 +71,6 @@ public class FtcSimSensors02 extends LinearOpMode {
                 detectedColor = "blue";
                 phase = 3;
             }
-
-            // slight correction
-            forward(0.1);
-            sleep(800);
         }
     }
 
