@@ -9,6 +9,10 @@ import com.qualcomm.robotcore.hardware.Servo;
  * This challenge introduces the use of methods to simplify our code.
  * My code is quite different from the solution in the tutorial video.
  *
+ * PRO TIP: I recommend you copy and paste over all your useful methods
+ * to be able to use in the next challenge. As you go, you can create new
+ * methods and have a nice library.
+ *
  * Notice how all the movement methods (forward, swingRight, and stopMotion)
  * all refer to the basic "move" method. They all move, just differently
  * based on how they handle the power distributions. Forward requires both
