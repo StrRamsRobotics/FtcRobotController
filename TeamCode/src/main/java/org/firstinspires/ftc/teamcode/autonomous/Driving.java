@@ -4,8 +4,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Driving {
-    private final long MILLIS = 1000;
+    private final double MILLIS = 1000;
     private final double sin45 = Math.sin(Math.toRadians(45)), cos45 = Math.cos(Math.toRadians(45));
+    private final double wheelCirc = 10 * Math.PI;
+    private final double rps = 1.5, rpm = 90;
+    private final int bigTeeth = 120, smallTeeth = 40, gearRatio = 3;
 
     private DcMotor flm, frm, blm, brm;
     private double x1, x2, y1, y2;
@@ -17,29 +20,27 @@ public class Driving {
         brm = hw.dcMotor.get("brm");
     }
 
-    public void move(double distance, boolean front) throws InterruptedException {
+    public void move(double cm, boolean front) throws InterruptedException {
         // turn to face direction first
-        y1 = front ? -1 : 1;
-        setPower(y1, y1, y1, y1);
-        Thread.sleep(500 * MILLIS);
+        y1 = front ? -0.5 : 0.5;
+        double rotations = cm / wheelCirc;
+        double time = rotations / rps;
 
-        // then move towards direction
+        setPower(y1, -y1, y1, -y1);
+        Thread.sleep((long)(MILLIS * time));
+        resetPower();
     }
 
-    public void strafe(double distance, boolean left) throws InterruptedException {
+    public void strafe(double time, boolean left) throws InterruptedException {
         y1 = -1;
         x1 = left ? -1 : 1;
 
-        y2 = x1*sin45 + y1*cos45;
-        x2 = x1*cos45 - y1*sin45;
+        // power
+        setPower(-x1*1.3, x1, x1, -x1);
 
-
-        //power
-        setPower(x2, -x2, -x2, x2);
-
-        Thread.sleep(1000 * MILLIS);
+        // time needed to sleep
+        Thread.sleep((long)(MILLIS * time));
         resetPower();
-
     }
 
     public void resetPower(){

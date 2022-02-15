@@ -4,70 +4,57 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class Arm extends System{
+public class Arm extends System {
 
+    private final String motorName = "outputController";
     private double casting = 0.0, increase = 1.0;
-    private double inc = 1440.0;
-    private int increment = 1440;
+    private int fullRotation = 288;
+    private int increment = fullRotation/2;
 
-    private DcMotor armMotor;
-    private Servo dump;
-    private int pos, initPos;
-    private int cnt;
+    private DcMotor motor;
+    private int start, end, current;
 
-    public Arm(HardwareMap hw, Controller controller){
-        super(hw, controller);
+    public Arm(HardwareMap map, Controller controller){
+        super(map, controller);
     }
 
     @Override
     public void init() {
-        // get motor
-        armMotor = hw.dcMotor.get("outputController");
-        dump = hw.servo.get("dump");
-        dump.setPosition(0);
-        armMotor.setTargetPosition(0);
-        casting = inc * increase;
-        increment = (int) inc;
-        pos = 0;
-        initPos = armMotor.getCurrentPosition();
+        motor = hw.dcMotor.get(motorName);
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        start = motor.getCurrentPosition();
+        end = start;
     }
 
     @Override
     public void update() {
+        // check for input
+        // if input, move motor to proper position
+        // bottom is position 0
         if(controller.gamepad2.dpad_down){
-            setPosThree();
+            end = start;
         }else if(controller.gamepad2.dpad_right){
-            setPosTwo();
-        }else if(controller.gamepad2.dpad_down){
-            setPosOne();
+            end = start + increment;
+        }else if(controller.gamepad2.dpad_up){
+            end = start + fullRotation;
         }
-        controller.telemetry.addData("Arm Position: ", pos);
 
-        if(controller.gamepad2.y)
-            dump.setPosition(1);
-        else dump.setPosition(0);
+        motor.setTargetPosition(end);
+        // set motor mode
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // set motor power
+        current = motor.getCurrentPosition() - start;
+        // first position
+        if(current > end){
+            // neg - move back
+            motor.setPower(-0.2);
+        }else if(current > end){
+            motor.setPower(0.2);
+        }
     }
 
-    private void setPosOne(){
-        pos = 0;
-        updatePos();
-    }
 
-    private void setPosTwo(){
-        pos = increment;
-        updatePos();
-    }
 
-    private void setPosThree(){
-        pos = increment * 2;
-        updatePos();
-    }
-
-    private void updatePos(){
-        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        armMotor.setTargetPosition(pos);
-        if(initPos > pos) armMotor.setPower(-1);
-        else armMotor.setPower(1);
-        initPos = pos;
-    }
 }

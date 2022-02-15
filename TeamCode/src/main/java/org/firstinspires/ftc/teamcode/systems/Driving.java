@@ -72,11 +72,6 @@ public class Driving extends System {
             y2 = x1*sin45 + y1*cos45;
             x2 = x1*cos45 - y1*sin45;
 
-            if (slomo){
-                y2 *= 0.2;
-                x2 *= 0.2;
-            }
-
 
             //power
             flm.setPower(x2);

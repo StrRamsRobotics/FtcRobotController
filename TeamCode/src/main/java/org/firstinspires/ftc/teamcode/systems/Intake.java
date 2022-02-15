@@ -23,7 +23,9 @@ public class Intake extends System {
     public void update() {
 
         if (controller.gamepad2.a){
-            inputSpinner.setPower(3);
+            inputSpinner.setPower(2);
+        }else if(controller.gamepad2.y){
+            inputSpinner.setPower(-2);
         }else{
             inputSpinner.setPower(0);
         }

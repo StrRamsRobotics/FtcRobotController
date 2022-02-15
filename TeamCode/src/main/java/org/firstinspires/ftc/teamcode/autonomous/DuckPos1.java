@@ -2,39 +2,33 @@ package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="DuckPosLeft")
 public class DuckPos1 extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         Driving driver = new Driving(hardwareMap);
+        DcMotor spinner = hardwareMap.dcMotor.get("duckSpinner");
         waitForStart();
 
+        spinner.setPower(-0.5);
+
         // move to the duck
-        driver.move(0.2, false);
-        driver.strafe(1.0, true);
-
-        // get duck
-        telemetry.addData("MS", "Definitely got the duck");
-        telemetry.update();
-
-        // go to big storage thing
-        driver.move(1.0, true);
-
-        // throw duck
-        telemetry.addData("MS", "Put duck ish?");
-        telemetry.update();
-
-        // move back into duck spinner
-        driver.strafe(1.0, false);
-        driver.move(1.0, false);
-
-        // spin
-        telemetry.addData("MS", "Spinning ducks!");
-        telemetry.update();
+        driver.setPower(1, 1, 1, 1);
+        Thread.sleep(25);
+        driver.resetPower();
+        driver.move(38, false);
 
         // finish i guess
 
+        Thread.sleep(6000);
+        driver.setPower(1, 1, 1, 1);
+        Thread.sleep(150);
+        driver.resetPower();
+
+        driver.move(40, false);
+        driver.resetPower();
     }
 
 }
