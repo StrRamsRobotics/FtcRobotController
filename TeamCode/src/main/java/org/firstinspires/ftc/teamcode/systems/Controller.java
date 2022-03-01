@@ -13,7 +13,6 @@ import java.util.List;
 public class Controller extends LinearOpMode {
 
     public void runOpMode(){
-
         List<System> systems = new ArrayList<>();
 
         // add the systems

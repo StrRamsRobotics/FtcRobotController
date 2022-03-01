@@ -21,7 +21,6 @@ public class Intake extends System {
 
     @Override
     public void update() {
-
         if (controller.gamepad2.a){
             inputSpinner.setPower(2);
         }else if(controller.gamepad2.y){
@@ -29,6 +28,7 @@ public class Intake extends System {
         }else{
             inputSpinner.setPower(0);
         }
+        controller.telemetry.addData("Intake Power", inputSpinner.getPowerFloat());
 
     }
 
