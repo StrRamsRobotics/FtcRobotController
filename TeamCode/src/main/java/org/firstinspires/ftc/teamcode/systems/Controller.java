@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.systems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.systems.Driving;
 import org.firstinspires.ftc.teamcode.systems.System;
@@ -13,7 +14,22 @@ import java.util.List;
 public class Controller extends LinearOpMode {
 
     public void runOpMode(){
+        // init stuff
+        UserInput.init(this);
+
         List<System> systems = new ArrayList<>();
+
+        /*
+        y + b for input
+
+        right_bumper for slomo activation
+
+        start for duck spinner
+
+        left_stick and right_stick for moving
+
+        dpad for moving the arm
+         */
 
         // add the systems
         systems.add(new Driving(hardwareMap, this));

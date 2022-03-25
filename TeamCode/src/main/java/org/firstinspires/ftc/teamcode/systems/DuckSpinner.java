@@ -22,18 +22,19 @@ public class DuckSpinner extends System {
 
     @Override
     public void update() {
-        if (controller.gamepad1.y && !pressed) {
+        if (UserInput.left.x && !pressed) {
             pressed = true;
             slomo = !slomo;
         } else pressed = false;
         // if a is pressed on gp 1, spin
-        if (controller.gamepad1.a){
+        if (UserInput.left.start){
             spinner.setPower(0.6 * (slomo ? 1 : 0.3));
             controller.telemetry.addData("Spinning", "YES!");
-            if (controller.gamepad1.right_trigger > 0) spinner.setPower(2.0);
+            if (UserInput.left.right_trigger > 0) spinner.setPower(2.0);
         }else{
             spinner.setPower(0);
             controller.telemetry.addData("Spinning", "NO!");
         }
+
     }
 }

@@ -21,9 +21,9 @@ public class Intake extends System {
 
     @Override
     public void update() {
-        if (controller.gamepad2.a){
+        if (UserInput.left.y){
             inputSpinner.setPower(2);
-        }else if(controller.gamepad2.y){
+        }else if(UserInput.left.b){
             inputSpinner.setPower(-2);
         }else{
             inputSpinner.setPower(0);
