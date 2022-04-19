@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class DuckSpinner extends System {
 
     private DcMotor spinner;
-    private boolean pressed=false, slomo=false;
+    private boolean pressed=false;
 
     public DuckSpinner(HardwareMap hw, Controller controller){
         super(hw, controller);
@@ -22,13 +22,9 @@ public class DuckSpinner extends System {
 
     @Override
     public void update() {
-        if (UserInput.left.x && !pressed) {
-            pressed = true;
-            slomo = !slomo;
-        } else pressed = false;
         // if a is pressed on gp 1, spin
         if (UserInput.left.start){
-            spinner.setPower(0.6 * (slomo ? 1 : 0.3));
+            spinner.setPower(0.6);
             controller.telemetry.addData("Spinning", "YES!");
             if (UserInput.left.right_trigger > 0) spinner.setPower(2.0);
         }else{

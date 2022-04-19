@@ -20,13 +20,11 @@ public class Controller extends LinearOpMode {
         List<System> systems = new ArrayList<>();
 
         /*
-        y + b for input
-
-        right_bumper for slomo activation
-
+        right bumper for slo mo toggle
         start for duck spinner
+        y + b for input spinner
 
-        left_stick and right_stick for moving
+        left_stick for moving
 
         dpad for moving the arm
          */
