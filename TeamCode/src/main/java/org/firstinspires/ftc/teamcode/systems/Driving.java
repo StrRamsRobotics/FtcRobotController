@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.utils.Time;
+
 public class Driving extends System {
 
     private final double FortiFiveInRads = -Math.PI/4, sin45 = Math.sin(FortiFiveInRads), cos45 = Math.cos(FortiFiveInRads);
@@ -53,14 +55,14 @@ public class Driving extends System {
         
         if(Math.round(y1*10) == 0) return;
 
-        y2 = (x1*sin45 + y1*cos45) * 0.2;
-        x2 = (x1*cos45 - y1*sin45) * 0.2;
+        y2 = (x1*sin45 + y1*cos45) * Time.delta;
+        x2 = (x1*cos45 - y1*sin45) * Time.delta;
 
         // decide if its strafing
         sx = y1*10;
         if(Math.round(sx) == 0.0) {
             // calculate power
-            controller.telemetry.addData("STrafe", true);
+            // controller.telemetry.addData("Strafe", true);
             flv -= y2;
             frv -= y2;
             blv -= x2;

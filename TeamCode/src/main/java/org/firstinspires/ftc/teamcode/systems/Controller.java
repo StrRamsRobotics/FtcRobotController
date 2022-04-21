@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.systems.Driving;
 import org.firstinspires.ftc.teamcode.systems.System;
+import org.firstinspires.ftc.teamcode.utils.Time;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,11 @@ public class Controller extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
+        Time.start();
         while(opModeIsActive()){
 
             // dropped time counting -> no need
-
+            Time.update();
             for (System s: systems)
                 s.update();
             telemetry.update();
