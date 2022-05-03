@@ -2,22 +2,24 @@ package org.firstinspires.ftc.teamcode.utils;
 
 public class Time {
 
-    public static double initTime, startTime, endTime;
-    public static double delta;
+    public static double deltaTime, startTime, endTime;
+
+    public static long initTime, currentTime;
 
     public static void start(){
-        initTime = getTime();
+        initTime = System.currentTimeMillis();
         startTime = getTime();
     }
 
     public static double getTime(){
-        return Double.longBitsToDouble(System.currentTimeMillis());
+        currentTime = System.currentTimeMillis();
+        return (double)(currentTime - initTime) / 1000;
     }
 
     public static void update(){
         endTime = getTime();
-        delta = endTime - startTime;
-        startTime = endTime;
+        deltaTime = endTime - startTime;
+        startTime = getTime();
     }
 
 }

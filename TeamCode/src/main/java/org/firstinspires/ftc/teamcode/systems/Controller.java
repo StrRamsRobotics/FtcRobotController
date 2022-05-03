@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.utils.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name="FTC ROBOT CONTROLLER")
+@TeleOp(name="FTC ROBOT CONTROLLERt")
 public class Controller extends LinearOpMode {
 
     public void runOpMode(){

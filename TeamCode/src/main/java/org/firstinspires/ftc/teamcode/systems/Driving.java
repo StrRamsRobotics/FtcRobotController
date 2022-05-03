@@ -36,50 +36,37 @@ public class Driving extends System {
     @Override
     public void update() {
         // strafing
-        y1 = UserInput.left.left_stick_y;
+        y1 = -UserInput.left.left_stick_y;
         x1 = -UserInput.left.left_stick_x;
 
-        // lerp stuff
-        flv = lerp(flv, 0.0, .15);
-        frv = lerp(frv, 0.0, .15);
-        blv = lerp(blv, 0.0, .15);
-        brv = lerp(brv, 0.0, .15);
-
-        double speedy = Math.round(y1 * 10);
-        
-        if(speedy == 0) return;
-
         // rotate the movement vector by 45 degrees counter clockwise
-        y2 = (x1*sin45 + y1*cos45) * Time.delta;
-        x2 = (x1*cos45 - y1*sin45) * Time.delta;
+        y2 = (x1*sin45 + y1*cos45) * Time.deltaTime * 20;
+        x2 = (x1*cos45 - y1*sin45) * Time.deltaTime * 20;
 
-        // apply movement to each motor
-        /*
-        x2 is applied to the
-
-
-
-        double y = -gamepad1.left_stick_y; // Remember, this is reversed!
-        double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-        double rx = gamepad1.right_stick_x;
-
-        // Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio, but only when
-        // at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
-
-        motorFrontLeft.setPower(frontLeftPower);
-        motorBackLeft.setPower(backLeftPower);
-        motorFrontRight.setPower(frontRightPower);
-        motorBackRight.setPower(backRightPower);
-
-         */
+        // output data
+        this.controller.telemetry.addData("Is moving", String.format("front-left: %.4f | front-right: %.4f\nback-left: %.4f | back-right: %.4f", flv, frv, blv, brv));
 
         flv += y2; frv += x2; blv += x2; brv += y2;
+
+        double turnval = UserInput.left.right_stick_x / 4;
+        if (y1 < 0) turnval *= -1;
+        if (turnval > 0){
+            frv -= turnval;
+            brv -= turnval;
+            flv += turnval;
+            blv += turnval;
+        }else{
+            flv += turnval;
+            blv += turnval;
+            frv -= turnval;
+            brv -= turnval;
+        }
+
+        // lerp stuff
+        flv = clamp(lerp(flv, 0.0, .15), -1, 1);
+        frv = clamp(lerp(frv, 0.0, .15), -1, 1);
+        blv = clamp(lerp(blv, 0.0, .15), -1, 1);
+        brv = clamp(lerp(brv, 0.0, .15), -1, 1);
 
         // set power
         flm.setPower(flv);
@@ -93,6 +80,11 @@ public class Driving extends System {
         if (num < min) return min;
         if (num > max) return max;
         return num;
+    }
+
+    public double getAngle(double x, double y){
+        // tan(t) = y/x
+        return Math.atan(y/x);
     }
 
     public double lerp(double a, double b, double c){
